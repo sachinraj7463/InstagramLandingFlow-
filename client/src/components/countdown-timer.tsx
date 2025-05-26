@@ -29,7 +29,7 @@ export function CountdownTimer({ duration, onComplete, color, label }: Countdown
       setTimeLeft((prev) => {
         if (prev <= 1) {
           setIsActive(false);
-          onComplete();
+          setTimeout(() => onComplete(), 0); // Defer state update
           return 0;
         }
         return prev - 1;

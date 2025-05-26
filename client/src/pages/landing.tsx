@@ -31,22 +31,38 @@ export default function Landing() {
 
   // Handle external redirect
   const handleGetLink = () => {
-    const refParam = getUrlParameter('ref');
-    let redirectUrl = 'https://example.com/default'; // Default URL
+    // First, try to get the most recent link from admin panel
+    const savedLinks = localStorage.getItem('admin-links');
+    let redirectUrl = 'https://example.com/default'; // Default fallback URL
     
-    if (refParam) {
-      switch(refParam) {
-        case 'instagram':
-          redirectUrl = 'https://example.com/instagram-exclusive';
-          break;
-        case 'story':
-          redirectUrl = 'https://example.com/story-access';
-          break;
-        case 'premium':
-          redirectUrl = 'https://example.com/premium-content';
-          break;
-        default:
-          redirectUrl = `https://example.com/ref-${refParam}`;
+    if (savedLinks) {
+      try {
+        const links = JSON.parse(savedLinks);
+        if (links.length > 0) {
+          redirectUrl = links[0].url; // Use the most recent link
+        }
+      } catch (error) {
+        console.error('Error loading admin links:', error);
+      }
+    }
+    
+    // If no admin links, fall back to URL parameter logic
+    if (redirectUrl === 'https://example.com/default') {
+      const refParam = getUrlParameter('ref');
+      if (refParam) {
+        switch(refParam) {
+          case 'instagram':
+            redirectUrl = 'https://example.com/instagram-exclusive';
+            break;
+          case 'story':
+            redirectUrl = 'https://example.com/story-access';
+            break;
+          case 'premium':
+            redirectUrl = 'https://example.com/premium-content';
+            break;
+          default:
+            redirectUrl = `https://example.com/ref-${refParam}`;
+        }
       }
     }
     
