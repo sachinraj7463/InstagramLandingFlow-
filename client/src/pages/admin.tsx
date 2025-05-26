@@ -190,16 +190,16 @@ export default function Admin() {
   const currentActiveLink = links.length > 0 ? links[0] : null;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gray-50 p-2 sm:p-4 lg:p-6">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Link Management</h1>
-              <p className="text-gray-600">Manage links for your landing page. The most recent link will be used.</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Link Management Dashboard</h1>
+              <p className="text-sm sm:text-base text-gray-600">Manage links for your landing page. The most recent link will be used for redirects.</p>
             </div>
-            <Button onClick={handleLogout} variant="outline" className="flex items-center gap-2">
+            <Button onClick={handleLogout} variant="outline" className="flex items-center gap-2 w-fit">
               <LogOut className="w-4 h-4" />
               Logout
             </Button>
@@ -391,18 +391,209 @@ export default function Admin() {
           </CardContent>
         </Card>
 
-        {/* Instructions */}
-        <Card className="mt-8 bg-blue-50 border-blue-200">
-          <CardContent className="pt-6">
-            <h3 className="font-semibold text-blue-900 mb-2">How it works:</h3>
-            <ul className="text-sm text-blue-800 space-y-1">
-              <li>• The most recently added link (top of the list) will be used on your landing page</li>
-              <li>• Users must complete both countdown steps before accessing the link</li>
-              <li>• You can edit or delete links anytime</li>
-              <li>• Links are stored locally in your browser</li>
-            </ul>
+        {/* Analytics & Statistics Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 mb-8">
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-600">Total Links</p>
+                  <p className="text-2xl font-bold text-gray-900">{links.length}</p>
+                </div>
+                <div className="p-3 bg-blue-100 rounded-full">
+                  <ExternalLink className="w-6 h-6 text-blue-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-600">Active Link</p>
+                  <p className="text-2xl font-bold text-green-600">{currentActiveLink ? '1' : '0'}</p>
+                </div>
+                <div className="p-3 bg-green-100 rounded-full">
+                  <Eye className="w-6 h-6 text-green-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center">
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-600">Last Added</p>
+                  <p className="text-sm font-bold text-gray-900">
+                    {currentActiveLink ? new Date(currentActiveLink.createdAt).toLocaleDateString() : 'No links'}
+                  </p>
+                </div>
+                <div className="p-3 bg-purple-100 rounded-full">
+                  <Plus className="w-6 h-6 text-purple-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Quick Actions Section */}
+        <Card className="mt-8 mb-8">
+          <CardHeader>
+            <CardTitle>Quick Actions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Button 
+                variant="outline" 
+                className="h-20 flex flex-col items-center justify-center space-y-2"
+                onClick={() => window.open('/', '_blank')}
+              >
+                <ExternalLink className="w-6 h-6" />
+                <span className="text-sm">View Landing Page</span>
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="h-20 flex flex-col items-center justify-center space-y-2"
+                onClick={() => {
+                  const data = JSON.stringify(links, null, 2);
+                  const blob = new Blob([data], { type: 'application/json' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'links-backup.json';
+                  a.click();
+                }}
+              >
+                <Eye className="w-6 h-6" />
+                <span className="text-sm">Export Links</span>
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="h-20 flex flex-col items-center justify-center space-y-2"
+                onClick={() => {
+                  setLinks([]);
+                  toast({
+                    title: "Links Cleared",
+                    description: "All links have been removed",
+                  });
+                }}
+              >
+                <Trash2 className="w-6 h-6" />
+                <span className="text-sm">Clear All</span>
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="h-20 flex flex-col items-center justify-center space-y-2"
+                onClick={() => window.location.reload()}
+              >
+                <Plus className="w-6 h-6" />
+                <span className="text-sm">Refresh Page</span>
+              </Button>
+            </div>
           </CardContent>
         </Card>
+
+        {/* System Information */}
+        <Card className="mt-8 mb-8">
+          <CardHeader>
+            <CardTitle>System Information</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-3">Current Session</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Login Time:</span>
+                    <span className="font-medium">{new Date().toLocaleTimeString()}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Browser:</span>
+                    <span className="font-medium">{navigator.userAgent.includes('Chrome') ? 'Chrome' : 'Other'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Platform:</span>
+                    <span className="font-medium">{navigator.platform}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-3">Storage Info</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Storage Type:</span>
+                    <span className="font-medium">Local Browser</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Data Size:</span>
+                    <span className="font-medium">{JSON.stringify(links).length} bytes</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Auto-Save:</span>
+                    <span className="font-medium text-green-600">Enabled</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Instructions */}
+        <Card className="mt-8 bg-blue-50 border-blue-200">
+          <CardHeader>
+            <CardTitle className="text-blue-900">How it works:</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold text-blue-900 mb-3">Link Management</h4>
+                <ul className="text-sm text-blue-800 space-y-2">
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    The most recently added link (top of the list) will be used on your landing page
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    Users must complete both countdown steps before accessing the link
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    You can edit or delete links anytime using the action buttons
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-blue-900 mb-3">Security & Storage</h4>
+                <ul className="text-sm text-blue-800 space-y-2">
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    All links are stored securely in your browser's local storage
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    Admin access is protected with login credentials
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                    Data persists across browser sessions until manually cleared
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Footer */}
+        <div className="mt-12 text-center text-gray-500 text-sm">
+          <p>© 2024 Link Management Dashboard. Built for efficient landing page management.</p>
+        </div>
       </div>
     </div>
   );
