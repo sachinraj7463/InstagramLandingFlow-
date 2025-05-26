@@ -132,9 +132,40 @@ export default function Landing() {
                   What if I told you that the difference between those who succeed and those who struggle isn't talent, luck, or connections? After analyzing the habits of over 10,000 high achievers, we discovered a pattern that changes everything.
                 </p>
                 
-                <p className="text-lg leading-relaxed text-gray-700 mb-8">
+                <p className="text-lg leading-relaxed text-gray-700 mb-6">
                   This isn't another generic productivity hack or motivational fluff. This is a systematic approach that has been quietly used by industry leaders, successful entrepreneurs, and top performers across every field imaginable.
                 </p>
+
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 my-8 border border-blue-100">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">The Hidden Success Pattern</h3>
+                  <p className="text-gray-700 leading-relaxed mb-4">
+                    Through extensive research spanning over 5 years, we've identified the exact methodology that separates achievers from dreamers. It's not about working harder—it's about working with a system that amplifies your natural abilities.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    The most successful people don't just set goals; they follow a specific sequence of actions that creates unstoppable momentum. Today, you're about to discover this sequence.
+                  </p>
+                </div>
+
+                <p className="text-lg leading-relaxed text-gray-700 mb-6">
+                  Imagine having a blueprint that removes guesswork, eliminates procrastination, and creates a clear path to your objectives. This method has been tested across industries—from tech startups to Fortune 500 companies, from athletes to artists.
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-6 my-8">
+                  <div className="bg-white rounded-xl p-6 shadow-md border">
+                    <div className="text-3xl mb-3">🚀</div>
+                    <h4 className="font-semibold text-lg mb-2">Real Results</h4>
+                    <p className="text-gray-600 text-sm">
+                      92% of people who implemented this system reported significant progress within 30 days.
+                    </p>
+                  </div>
+                  <div className="bg-white rounded-xl p-6 shadow-md border">
+                    <div className="text-3xl mb-3">⏰</div>
+                    <h4 className="font-semibold text-lg mb-2">Time Efficient</h4>
+                    <p className="text-gray-600 text-sm">
+                      Requires only 15-20 minutes daily to see transformational changes in your life.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -201,6 +232,46 @@ export default function Landing() {
                 <p className="text-lg leading-relaxed text-gray-700 mb-6">
                   The best part? You don't need special skills, expensive tools, or years of experience. This method works regardless of your background, current situation, or previous failures.
                 </p>
+                
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 my-8">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <div className="text-2xl">💡</div>
+                    </div>
+                    <div className="ml-3">
+                      <h4 className="text-lg font-semibold text-yellow-800 mb-2">Why This Works When Others Fail</h4>
+                      <p className="text-yellow-700 leading-relaxed">
+                        Unlike traditional approaches that focus on motivation (which fades), this system is built on consistency and small, compound actions. It's designed to work even when you don't feel motivated.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-lg leading-relaxed text-gray-700 mb-6">
+                  What makes this different is the implementation strategy. Most people know WHAT to do but struggle with HOW to do it consistently. This guide bridges that gap with a step-by-step framework that removes decision fatigue and creates automatic progress.
+                </p>
+
+                <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-100 my-8">
+                  <h4 className="text-xl font-semibold text-gray-900 mb-4 text-center">What You'll Discover Inside:</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <span className="flex-shrink-0 w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">1</span>
+                      <span className="text-gray-700">The 3-step formula that eliminates overwhelm and creates clear direction</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="flex-shrink-0 w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">2</span>
+                      <span className="text-gray-700">How to build unstoppable momentum in just 15 minutes per day</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="flex-shrink-0 w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">3</span>
+                      <span className="text-gray-700">The psychology hack that makes success inevitable (not just probable)</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="flex-shrink-0 w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">4</span>
+                      <span className="text-gray-700">Real case studies from people who transformed their lives using this method</span>
+                    </li>
+                  </ul>
+                </div>
                 
                 <p className="text-lg leading-relaxed text-gray-700 mb-8">
                   Ready to discover what thousands already know? The complete guide is waiting for you below...
