@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trash2, Edit2, Plus, ExternalLink, Eye, EyeOff } from "lucide-react";
+import { Trash2, Edit2, Plus, ExternalLink, Eye, EyeOff, LogOut } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
 
 interface LinkItem {
   id: string;
@@ -21,7 +22,21 @@ export default function Admin() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editUrl, setEditUrl] = useState("");
+  const [, setLocation] = useLocation();
   const { toast } = useToast();
+
+  // Check authentication on mount
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("admin-authenticated");
+    if (!isAuthenticated) {
+      setLocation("/");
+      toast({
+        title: "Access Denied",
+        description: "Please login to access the admin panel",
+        variant: "destructive"
+      });
+    }
+  }, [setLocation, toast]);
 
   // Load links from localStorage on component mount
   useEffect(() => {
@@ -163,6 +178,15 @@ export default function Admin() {
     setEditUrl("");
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("admin-authenticated");
+    setLocation("/");
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out",
+    });
+  };
+
   const currentActiveLink = links.length > 0 ? links[0] : null;
 
   return (
@@ -170,8 +194,16 @@ export default function Admin() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Link Management</h1>
-          <p className="text-gray-600">Manage links for your landing page. The most recent link will be used.</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Link Management</h1>
+              <p className="text-gray-600">Manage links for your landing page. The most recent link will be used.</p>
+            </div>
+            <Button onClick={handleLogout} variant="outline" className="flex items-center gap-2">
+              <LogOut className="w-4 h-4" />
+              Logout
+            </Button>
+          </div>
         </div>
 
         {/* Current Active Link Display */}

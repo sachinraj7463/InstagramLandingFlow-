@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { CountdownTimer } from "@/components/countdown-timer";
 import { Button } from "@/components/ui/button";
+import { AdminLogin } from "@/components/admin-login";
 
 export default function Landing() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -90,7 +91,10 @@ export default function Landing() {
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold text-blog-dark">Exclusive Access</h1>
-            <div className="text-sm text-blog-muted">Step {currentStep} of 2</div>
+            <div className="flex items-center gap-4">
+              <div className="text-sm text-blog-muted">Step {currentStep} of 2</div>
+              <AdminLogin />
+            </div>
           </div>
         </div>
       </header>
