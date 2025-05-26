@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trash2, Edit2, Plus, ExternalLink } from "lucide-react";
+import { Trash2, Edit2, Plus, ExternalLink, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface LinkItem {
@@ -17,6 +17,7 @@ export default function Admin() {
   const [links, setLinks] = useState<LinkItem[]>([]);
   const [newTitle, setNewTitle] = useState("");
   const [newUrl, setNewUrl] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editUrl, setEditUrl] = useState("");
@@ -48,6 +49,28 @@ export default function Admin() {
     }
   };
 
+  const togglePreview = () => {
+    if (!newTitle.trim() || !newUrl.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter both title and URL to preview",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!validateUrl(newUrl)) {
+      toast({
+        title: "Invalid URL",
+        description: "Please enter a valid URL to preview",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setShowPreview(!showPreview);
+  };
+
   const addLink = () => {
     if (!newTitle.trim() || !newUrl.trim()) {
       toast({
@@ -77,6 +100,7 @@ export default function Admin() {
     setLinks(prev => [newLink, ...prev]);
     setNewTitle("");
     setNewUrl("");
+    setShowPreview(false);
     
     toast({
       title: "Link Added",
@@ -200,10 +224,51 @@ export default function Admin() {
                 />
               </div>
             </div>
-            <Button onClick={addLink} className="w-full md:w-auto">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Link
-            </Button>
+            
+            {/* Preview Toggle & Add Buttons */}
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button 
+                onClick={togglePreview} 
+                variant="outline" 
+                className="flex-1 sm:flex-none"
+              >
+                {showPreview ? <EyeOff className="w-4 h-4 mr-2" /> : <Eye className="w-4 h-4 mr-2" />}
+                {showPreview ? "Hide Preview" : "Preview Link"}
+              </Button>
+              <Button onClick={addLink} className="flex-1 sm:flex-none">
+                <Plus className="w-4 h-4 mr-2" />
+                Add Link
+              </Button>
+            </div>
+
+            {/* Link Preview Section */}
+            {showPreview && newTitle.trim() && newUrl.trim() && (
+              <div className="mt-6 p-4 border-2 border-dashed border-blue-300 rounded-lg bg-blue-50">
+                <div className="flex items-center gap-2 mb-3">
+                  <Eye className="w-4 h-4 text-blue-600" />
+                  <h4 className="font-semibold text-blue-800">Link Preview</h4>
+                </div>
+                <div className="bg-white rounded-lg p-4 border border-blue-200">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="font-semibold text-gray-900 truncate">{newTitle.trim()}</h3>
+                        <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                          Will be Active
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-600 break-all mb-2">{newUrl.trim()}</p>
+                      <p className="text-xs text-gray-500">
+                        Will be added: {new Date().toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 text-sm text-blue-700">
+                  <p>✨ This link will become the active redirect URL for your landing page once added.</p>
+                </div>
+              </div>
+            )}
           </CardContent>
         </Card>
 
