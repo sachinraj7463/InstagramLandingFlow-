@@ -312,7 +312,7 @@ export default function Landing() {
       <footer className="border-t border-blog-border bg-white/50 mt-16">
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="text-center text-blog-muted text-sm">
-            <p>© 2024 Exclusive Access. All rights reserved.</p>
+            <p>© 2025 Exclusive Access. All rights reserved.</p>
           </div>
         </div>
       </footer>

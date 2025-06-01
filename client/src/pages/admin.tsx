@@ -592,7 +592,7 @@ export default function Admin() {
 
         {/* Footer */}
         <div className="mt-12 text-center text-gray-500 text-sm">
-          <p>© 2024 Link Management Dashboard. Built for efficient landing page management.</p>
+          <p>© 2025 Link Management Dashboard. Built for efficient landing page management.</p>
         </div>
       </div>
     </div>
